@@ -31,13 +31,15 @@ export default function TodoList({ title, todos, setTodos }) {
         <span className="count">{todos.length}</span>
       </div>
       <ul>
-        {todos.map((todo) => (
-          <TodoItem
-            {...todo}
-            onDelete={() => handleDelete(todo.id)}
-            toggleComplete={() => toggleComplete(todo.id)}
-          />
-        ))}
+{todos.map((todo) => (
+  <TodoItem
+    key={todo.id}
+    {...todo}
+    onDelete={() => handleDelete(todo.id)}
+    toggleComplete={() => toggleComplete(todo.id)}
+  />
+))}
+
       </ul>
     </StyledList>
   );
