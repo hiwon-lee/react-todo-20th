@@ -1,24 +1,22 @@
 import styled from 'styled-components';
 import { Button } from '../Button';
 import { useState } from 'react';
-
+import { useTodo } from '../../hooks/useTodo';
 // 할 일 입력 폼
 export default function TodoForm({ setTodos }) {
   const [inputValue, setInputValue] = useState('');
+  const { createTodo, loading, error } = useTodo();
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(inputValue);
-    if (inputValue.trim()) {
-      setTodos((prevTodos) => [
-        ...prevTodos,
-        {
-          id: Date.now(), // 유니크한 ID 생성
-          value: inputValue,
-          isCompleted: false,
-        },
-      ]);
-      setInputValue(''); // 입력 필드 초기화
+    try {
+      // const todoData = { value, false };
+      const createdTodo = await createTodo(inputValue, false); // Hook 호출
+      console.log('Todo created:', createdTodo);
+      // 성공적으로 생성 후 폼 초기화
+      setInputValue('');
+    } catch (err) {
+      console.error('Failed to create todo:', err);
     }
   };
 
